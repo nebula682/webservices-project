@@ -1,0 +1,20 @@
+{
+  "name": "webservices-project",
+  "version": "1.0.0",
+  "description": "My first project",
+  "homepage": "https://github.com/nebula682/webservices-project#readme",
+  "bugs": {
+    "url": "https://github.com/nebula682/webservices-project/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nebula682/webservices-project.git"
+  },
+  "license": "ISC",
+  "author": "Malcolm Nkomo",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
