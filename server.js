@@ -1,17 +1,16 @@
 const express = require('express');
-const dotenv = require('dotenv');
-const connectDB = require('./config/db');
-const vehicleRoutes = require('./routes/vehicles');
-const cors = require('cors');
 
-dotenv.config();
-connectDB();
-
+const mongodb = require('./data/database');
 const app = express();
-app.use(cors());
-app.use(express.json());
 
-app.use('/api/vehicles', vehicleRoutes);
+const port = process.env.PORT || 3000;
+app.use('/', require('./routes'));
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+mongodb.initDb((err) =>  {
+                if (err) {console.log(err);
+}
+else {
+app.listen(port, ()  => {console.log(`Database is listening and node Running on port ${port}`)});
+}
+});
