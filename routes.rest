@@ -1,0 +1,36 @@
+//LOCALHOST
+###Get all vehicles/drivers
+GET http://localhost:3000/drivers
+
+
+### Get vehicle by Id
+GET http://localhost:3000/drivers/68247a1aa4eb84814becfb97
+
+### Create Contact
+POST https://localhost:3000/vehicles HTTP/1.1
+content-type: application/json
+
+{
+                "firstName": "",
+  "lastName": "Malcolm",
+  "licenseNumber": "DL-10003",
+  "phone": "+254733445566",
+  "email": "dkimani@example.com",
+  "experienceYears": 8,
+  "available": true
+
+}
+
+### Put vehicle
+PUT http://localhost:3000/drivers/68247a1aa4eb84814becfb97 HTTP/1.1
+Content-Type: application/json
+
+{
+   "firstName": "David",
+  "lastName": "Malcolm",
+  "licenseNumber": "DL-10003",
+  "phone": "+254733445566",
+  "email": "dkimani@example.com",
+  "experienceYears": 8,
+  "available": true
+}
