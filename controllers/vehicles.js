@@ -1,27 +1,31 @@
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
-const getAll = async (req, res) => {
+const getAll = (req,res) => {
+  mongodb.getDatabase().db().collection('vehicles').find().toArray((err, vehicles) =>{
+    if(err) {
+      res.status(400).json({ message:err});
 
-                const result = await mongodb.getDatabase().db().collection('vehicles').find();
-                result.toArray().then((vehicles) => {
-                                res.setHeader('Content-Type', 'application/json');
-                                res.status(200).json(vehicles);
-
-                });
-                
-
-}
+  }
+  res.setHeader('Content-Type','application/json');
+  res.status(200).json(vehicles);
+  
+});
+};
 
 const getSingle = async (req, res) => {
-                const vehicleId = new ObjectId(req.params.id);
-                const result = await mongodb.getDatabase().db().collection('vehicles').find({ _id: vehicleId});
-                result.toArray().then((vehicles) => {
-                                res.setHeader('Content-Type', 'application/json');
-                                res.status(200).json(vehicles[0]);
+  const vehicleId = new ObjectId(req.params.id);
+   mongodb.getDatabase().db().collection('vehicles').find({
+    _id:vehicleId
+   }).toArray((err, result) =>{
+    if(err) {
+      res.status(400).json({ message:err});
 
-                });
-                
+  }
+  res.setHeader('Content-Type','application/json');
+  res.status(200).json(result[0]);
+  
+});
 };
 
 const createVehicle = async (req, res) => {

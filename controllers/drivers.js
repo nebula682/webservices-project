@@ -1,22 +1,33 @@
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
-const getAll = async (req, res) => {
-  const result = await mongodb.getDatabase().db().collection('drivers').find();
-  result.toArray().then((drivers) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.status(200).json(drivers);
-  });
+const getAll = (req,res) => {
+  mongodb.getDatabase().db().collection('drivers').find().toArray((err, drivers) =>{
+    if(err) {
+      res.status(400).json({ message:err});
+
+  }
+  res.setHeader('Content-Type','application/json');
+  res.status(200).json(drivers);
+  
+});
 };
 
 const getSingle = async (req, res) => {
   const driverId = new ObjectId(req.params.id);
-  const result = await mongodb.getDatabase().db().collection('drivers').find({ _id: driverId });
-  result.toArray().then((drivers) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.status(200).json(drivers[0]);
-  });
+   mongodb.getDatabase().db().collection('drivers').find({
+    _id:driverId
+   }).toArray((err, result) =>{
+    if(err) {
+      res.status(400).json({ message:err});
+
+  }
+  res.setHeader('Content-Type','application/json');
+  res.status(200).json(result[0]);
+  
+});
 };
+  
 
 
 const createDriver = async (req, res) => {
