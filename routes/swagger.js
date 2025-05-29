@@ -1,16 +1,37 @@
-/*const router = require('express').Router();
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../swagger.json');
-router.use('/api-docs', swaggerUi.serve);
-router.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
-module.exports = router;*/
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const router = require('express').Router();
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../swagger.json');
+const swaggerJsdoc = require('swagger-jsdoc');
 
-// Serve Swagger UI at /api-docs
-router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Vehicle & Driver API',
+      version: '1.0.0',
+    },
+  },
+  apis: ['./routes/index.js'], // Scan these files for Swagger comments
+
+   
+};
+
+/*const specs = swaggerJsdoc(options);
+router.use('/', swaggerUi.serve);
+router.get('/', swaggerUi.setup(specs));*/
 
 module.exports = router;

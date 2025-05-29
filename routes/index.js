@@ -4,7 +4,10 @@
 
 const router = require('express').Router();
 
-router.use('/', require('./swagger'));
+//router.use('/', require('./swagger'));//
+
+router.use('/api-docs', require('./swagger')); 
+
 
 router.get('/', (req, res) => {
                 //#swagger.tag=['Hello World']
@@ -19,6 +22,17 @@ router.use('/drivers', require('./drivers')); // 👈 New collection route
 
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
 
 
 

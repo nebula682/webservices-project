@@ -1,9 +1,9 @@
-const express = require('express');
+/*const express = require('express');
 const router = express.Router();
 
 const vehiclesController = require('../controllers/vehicles');
 
-const validation = require('../middleware/validate');
+
 
 
 
@@ -11,10 +11,34 @@ router.get('/', vehiclesController.getAll);
 
 router.get('/:id', vehiclesController.getSingle);
 
-router.post('/', validation.saveVehicle, vehiclesController.createVehicle);
+router.post('/', vehiclesController.createVehicle);
 
-router.put('/:id', validation.saveVehicle, vehiclesController.updateVehicle);
+router.put('/:id', vehiclesController.updateVehicle);
 
 router.delete('/:id', vehiclesController.deleteVehicle);
 
+module.exports = router;*/
+
+
+
+
+
+
+const express = require('express');
+const router = express.Router();
+const vehiclesController = require('../controllers/vehicles');
+const { vehiclesValidation } = require('../validations/vehiclesValidation');
+
+
+
+
+router.get('/', vehiclesController.getAll);
+router.get('/:id', vehiclesController.getSingle);
+router.post('/', vehiclesValidation, vehiclesController.createVehicle);
+router.put('/:id', vehiclesValidation, vehiclesController.updateVehicle);
+router.delete('/:id', vehiclesController.deleteVehicle);
+
 module.exports = router;
+
+
+
