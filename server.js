@@ -105,6 +105,13 @@ app.get('/github/callback', passport.authenticate('github', {
                 res.redirect('/');  
 });
 
+const { isAuthenticated } = require('./middleware/authenticate');
+
+// Add this route 
+app.get('/protected', isAuthenticated, (req, res) => {
+  res.status(200).json({ message: 'You are authorized!', user: req.session.user });
+});
+
 
 //app.use('/',require('./routes'));//
 app.use('/',require('./routes'));

@@ -12,26 +12,6 @@
     "https"
   ],
   "paths": {
-    "/vehicles": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/drivers": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/": {
       "get": {
         "description": "",
@@ -53,16 +33,6 @@
       }
     },
     "/logout": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api-docs/": {
       "get": {
         "description": "",
         "responses": {

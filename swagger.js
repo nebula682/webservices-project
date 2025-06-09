@@ -43,8 +43,6 @@ const doc = {
     title: 'Vehicles and Drivers API',
     description: 'API for managing vehicles and drivers',
   },
-  host: 'localhost:3000',
-  schemes: ['http', 'https'],
 };
 
 const outputFile = './swagger.json';
