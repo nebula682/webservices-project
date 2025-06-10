@@ -24,7 +24,7 @@ module.exports = router;*/
 
 
 
-const express = require('express');
+/*const express = require('express');
 const router = express.Router();
 const vehiclesController = require('../controllers/vehicles');
 const { vehiclesValidation } = require('../validations/vehiclesValidation');
@@ -41,7 +41,7 @@ const  { isAuthenticated} = require('../middleware/authenticate');
  *     responses:
  *       200:
  *         description: Success
- */
+ *
 router.get('/', vehiclesController.getAll);
 /**
  * @swagger
@@ -57,7 +57,7 @@ router.get('/', vehiclesController.getAll);
  *     responses:
  *       200:
  *         description: Success
- */
+ *
 
 router.get('/:id', vehiclesController.getSingle);
 
@@ -68,6 +68,51 @@ router.delete('/:id', vehiclesController.deleteVehicle);
 router.post('/', isAuthenticated, vehiclesController.createVehicle);
 router.put('/:id', isAuthenticated, vehiclesController.updateVehicle);
 router.delete('/:id', isAuthenticated, vehiclesController.deleteVehicle)
+
+module.exports = router;*/
+
+
+
+
+
+const express = require('express');
+const router = express.Router();
+const vehiclesController = require('../controllers/vehicles');
+const { vehiclesValidation } = require('../validations/vehiclesValidation');
+const { isAuthenticated } = require('../middleware/authenticate');
+
+/**
+ * @swagger
+ * /vehicles:
+ *   get:
+ *     summary: Get all vehicles
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+router.get('/', vehiclesController.getAll);
+
+/**
+ * @swagger
+ * /vehicles/{id}:
+ *   get:
+ *     summary: Get a single vehicle by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+router.get('/:id', vehiclesController.getSingle);
+
+// Protect POST, PUT, DELETE with isAuthenticated middleware
+router.post('/', isAuthenticated, vehiclesValidation, vehiclesController.createVehicle);
+router.put('/:id', isAuthenticated, vehiclesValidation, vehiclesController.updateVehicle);
+router.delete('/:id', isAuthenticated, vehiclesController.deleteVehicle);
 
 module.exports = router;
 

@@ -31,12 +31,28 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 app
-.use (bodyParser.json())
+/*.use (bodyParser.json())
 .use(session({
                 secret:"secret",
                 resave:false,
                 saveUninitialized:true,
+}))*/
+
+
+app
+.use(bodyParser.json())
+.use(session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        secure: process.env.NODE_ENV === 'production',  // true in production, false locally
+    }
 }))
+
+
+
+
 //This is the basic express session({..}) initialization
 .use(passport.initialize())
 //init passport on every Route call.
@@ -83,8 +99,47 @@ function(accessToken, refreshToken, profile, done){
                 return done(null, profile);//})
                 
 }
-
 ));
+
+
+
+
+
+
+
+
+// Start GitHub login process
+app.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
+
+/* GitHub callback URL after login
+app.get('/auth/github/callback',
+    passport.authenticate('github', { failureRedirect: '/' }),
+    (req, res) => {
+        req.session.user = req.user;  // Save user to session
+        res.redirect('/');            // Redirect to home after login
+    }
+);*/
+
+
+
+app.get('/github/callback', passport.authenticate('github', { failureRedirect: '/' }), (req, res) => {
+  req.session.user = req.user;
+  res.redirect('/');
+});
+
+// Logout route
+app.get('/logout', (req, res) => {
+    req.logout(() => {
+        req.session.destroy();
+        res.redirect('/');
+    });
+});
+
+
+
+
+
+
 
 passport.serializeUser((user,done) => {
                 done(null, user);
@@ -96,20 +151,29 @@ passport.deserializeUser((user,done) => {
 
 
 
-app.get('/', (req, res) => {res.send(req.session.user !== undefined ? `Logged in as ${req.session.user.displayName}` : "Logged Out")});
-
-app.get('/github/callback', passport.authenticate('github', {
-                failureRedirect: '/api-docs', session:false}
-),(req, res) => {
-                req.session.user = req.user;
-                res.redirect('/');  
+app.get('/', (req, res) => {
+  // Use req.user to check if user is logged in
+  if (req.user) {
+    res.send(`Logged in as ${req.user.displayName}`);
+  } else {
+    res.send("Logged Out");
+  }
 });
 
 const { isAuthenticated } = require('./middleware/authenticate');
 
-// Add this route 
+/* Add this route 
 app.get('/protected', isAuthenticated, (req, res) => {
   res.status(200).json({ message: 'You are authorized!', user: req.session.user });
+});*/
+
+
+
+
+
+
+app.get('/protected', isAuthenticated, (req, res) => {
+    res.status(200).json({ message: 'You are authorized!', user: req.user });
 });
 
 
