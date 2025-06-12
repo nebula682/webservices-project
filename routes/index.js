@@ -32,7 +32,7 @@ router.use('/vehicles', require('./vehicles'));
 router.use('/drivers', require('./drivers')); // 👈 New collection route
 
 
-//router.get('/login', passport.authenticate('github'), (req,res)=> {});//
+/*router.get('/login', passport.authenticate('github'), (req,res)=> {});//
 router.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
 
 router.get('/logout', function(req, res, next)  {
@@ -41,7 +41,7 @@ router.get('/logout', function(req, res, next)  {
                                 res.redirect('/');
 
                 });
-});
+});*/
 
 
 
