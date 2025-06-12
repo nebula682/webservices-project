@@ -1,6 +1,6 @@
 
 
-
+require('dotenv').config();
 
 
 
@@ -82,6 +82,9 @@ app.use('/api-docs', swaggerUi.serve,
 swaggerUi.setup(swaggerfile));
 
 
+console.log("OAuth Callback URL (env):", process.env.CALLBACK_URL);
+
+
 
 
 
@@ -122,7 +125,7 @@ app.get('/auth/github/callback',
 
 
 
-app.get('/github/callback', passport.authenticate('github', { failureRedirect: '/' }), (req, res) => {
+app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/' }), (req, res) => {
   req.session.user = req.user;
   res.redirect('/');
 });
@@ -179,6 +182,11 @@ app.get('/protected', isAuthenticated, (req, res) => {
 
 //app.use('/',require('./routes'));//
 app.use('/',require('./routes'));
+
+
+app.get('/login', (req, res) => {
+  res.redirect('/auth/github');
+});
 
 
 
