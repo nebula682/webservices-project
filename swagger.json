@@ -5,11 +5,7 @@
     "description": "API for managing vehicles and drivers",
     "version": "1.0.0"
   },
-  "servers": [
-  {
-    "url": "http://localhost:3000"
-  }
-],
+  
   
   
   

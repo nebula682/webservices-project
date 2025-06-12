@@ -47,6 +47,7 @@ app
     saveUninitialized: true,
     cookie: {
         secure: process.env.NODE_ENV === 'production',  // true in production, false locally
+         sameSite: 'lax', // helps with cross-site cookies and OAuth redirects
     }
 }))
 
@@ -130,6 +131,15 @@ app.get('/auth/github/callback', passport.authenticate('github', { failureRedire
   res.redirect('/');
 });
 
+
+
+
+
+// Optional route to show login failure
+app.get('/login-failed', (req, res) => {
+  res.status(401).send('Login failed, please try again.');
+});
+
 // Logout route
 app.get('/logout', (req, res) => {
     req.logout(() => {
@@ -144,12 +154,23 @@ app.get('/logout', (req, res) => {
 
 
 
-passport.serializeUser((user,done) => {
+/*passport.serializeUser((user,done) => {
                 done(null, user);
 });
 
 passport.deserializeUser((user,done) => {
                 done(null, user);
+});*/
+
+
+
+passport.serializeUser((user, done) => {
+  done(null, user.id); // store user ID only
+});
+
+passport.deserializeUser((id, done) => {
+  // Fetch user by id here if you have DB, or just pass id for now
+  done(null, { id }); 
 });
 
 
