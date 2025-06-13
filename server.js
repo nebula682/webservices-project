@@ -154,24 +154,24 @@ app.get('/logout', (req, res) => {
 
 
 
-/*passport.serializeUser((user,done) => {
+passport.serializeUser((user,done) => {
                 done(null, user);
 });
 
 passport.deserializeUser((user,done) => {
                 done(null, user);
-});*/
+});
 
 
 
-passport.serializeUser((user, done) => {
+/*passport.serializeUser((user, done) => {
   done(null, user.id); // store user ID only
 });
 
 passport.deserializeUser((id, done) => {
   // Fetch user by id here if you have DB, or just pass id for now
   done(null, { id }); 
-});
+});*/
 
 
 
@@ -190,6 +190,12 @@ const { isAuthenticated } = require('./middleware/authenticate');
 app.get('/protected', isAuthenticated, (req, res) => {
   res.status(200).json({ message: 'You are authorized!', user: req.session.user });
 });*/
+
+
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err);
+  res.status(500).json({ message: 'Internal Server Error', error: err.message });
+});
 
 
 
