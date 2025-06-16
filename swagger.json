@@ -5,118 +5,284 @@
     "description": "API for managing vehicles and drivers",
     "version": "1.0.0"
   },
-  
-  
-  
-  
-  
-  
-  
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
   "paths": {
-    "/": {
+    "/trips/": {
       "get": {
-        "description": "",
+        "tags": ["trips"],
+        "description": "Get all trips",
+        "produces": ["application/json"],
         "responses": {
-          "200": {
-            "description": "OK"
+          "200": { "description": "OK" },
+          "204": { "description": "No Content" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "post": {
+        "tags": ["trips"],
+        "description": "Create a new trip",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "driverId": { "type": "string", "example": "507f1f77bcf86cd799439011" },
+                "vehicleId": { "type": "string", "example": "507f191e810c19729de860ea" },
+                "startLocation": { "type": "string", "example": "Harare" },
+                "endLocation": { "type": "string", "example": "Bulawayo" },
+                "startTime": { "type": "string", "format": "date-time", "example": "2025-06-15T08:30:00Z" },
+                "endTime": { "type": "string", "format": "date-time", "example": "2025-06-15T12:30:00Z" },
+                "status": { "type": "string", "example": "scheduled" }
+              },
+              "required": ["driverId", "vehicleId", "startLocation", "endLocation", "startTime", "endTime", "status"]
+            }
           }
+        ],
+        "responses": {
+          "201": { "description": "Created" },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     },
-    "/login": {
+    "/trips/{id}": {
       "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
+        "tags": ["trips"],
+        "description": "Get a single trip by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "put": {
+        "tags": ["trips"],
+        "description": "Update a trip",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "driverId": { "type": "string" },
+                "vehicleId": { "type": "string" },
+                "startLocation": { "type": "string" },
+                "endLocation": { "type": "string" },
+                "startTime": { "type": "string", "format": "date-time" },
+                "endTime": { "type": "string", "format": "date-time" },
+                "status": { "type": "string" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": { "description": "No Content" },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "delete": {
+        "tags": ["trips"],
+        "description": "Delete a trip",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": { "description": "No Content" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     },
-    "/logout": {
+    "/records/": {
       "get": {
-        "description": "",
+        "tags": ["records"],
+        "description": "Get all records",
+        "produces": ["application/json"],
         "responses": {
-          "default": {
-            "description": ""
+          "200": { "description": "OK" },
+          "204": { "description": "No Content" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "post": {
+        "tags": ["records"],
+        "description": "Create a new record",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "tripId": { "type": "string", "example": "507f1f77bcf86cd799439011" },
+                "distanceKm": { "type": "number", "example": 150 },
+                "durationMinutes": { "type": "number", "example": 180 },
+                "fuelUsedLiters": { "type": "number", "example": 20 },
+                "notes": { "type": "string", "example": "Smooth trip" }
+              },
+              "required": ["tripId", "distanceKm", "durationMinutes", "fuelUsedLiters"]
+            }
           }
+        ],
+        "responses": {
+          "201": { "description": "Created" },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Internal Server Error" }
+        }
+      }
+    },
+    "/records/{id}": {
+      "get": {
+        "tags": ["records"],
+        "description": "Get a single record by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "put": {
+        "tags": ["records"],
+        "description": "Update a record",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "tripId": { "type": "string" },
+                "distanceKm": { "type": "number" },
+                "durationMinutes": { "type": "number" },
+                "fuelUsedLiters": { "type": "number" },
+                "notes": { "type": "string" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": { "description": "No Content" },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "delete": {
+        "tags": ["records"],
+        "description": "Delete a record",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": { "description": "No Content" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     },
     "/vehicles/": {
       "get": {
-        "tags": [
-          "vehicles"
-        ],
+        "tags": ["vehicles"],
         "description": "Get all vehicles",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "post": {
-        "description": "",
+        "tags": ["vehicles"],
+        "description": "Create a new vehicle",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "make": {
-                  "example": "any"
-                },
-                "model": {
-                  "example": "any"
-                },
-                "year": {
-                  "example": "any"
-                },
-                "color": {
-                  "example": "any"
-                },
-                "mileage": {
-                  "example": "any"
-                },
-                "price": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                }
-              }
+                "make": { "type": "string", "example": "Toyota" },
+                "model": { "type": "string", "example": "Corolla" },
+                "year": { "type": "integer", "example": 2020 },
+                "color": { "type": "string", "example": "Red" },
+                "mileage": { "type": "integer", "example": 15000 },
+                "price": { "type": "number", "example": 20000 },
+                "status": { "type": "string", "example": "available" }
+              },
+              "required": ["make", "model", "year", "color", "mileage", "price", "status"]
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "201": { "description": "Created" },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     },
     "/vehicles/{id}": {
       "get": {
-        "description": "",
+        "tags": ["vehicles"],
+        "description": "Get a single vehicle by ID",
         "parameters": [
           {
             "name": "id",
@@ -126,19 +292,14 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "put": {
-        "description": "",
+        "tags": ["vehicles"],
+        "description": "Update a vehicle",
         "parameters": [
           {
             "name": "id",
@@ -149,54 +310,32 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "make": {
-                  "example": "any"
-                },
-                "model": {
-                  "example": "any"
-                },
-                "year": {
-                  "example": "any"
-                },
-                "color": {
-                  "example": "any"
-                },
-                "mileage": {
-                  "example": "any"
-                },
-                "price": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                }
+                "make": { "type": "string" },
+                "model": { "type": "string" },
+                "year": { "type": "integer" },
+                "color": { "type": "string" },
+                "mileage": { "type": "integer" },
+                "price": { "type": "number" },
+                "status": { "type": "string" }
               }
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "204": { "description": "No Content" },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["vehicles"],
+        "description": "Delete a vehicle",
         "parameters": [
           {
             "name": "id",
@@ -206,101 +345,59 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "204": { "description": "No Content" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     },
     "/drivers/": {
       "get": {
-        "tags": [
-          "drivers"
-        ],
+        "tags": ["drivers"],
         "description": "Get all drivers",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "204": {
-            "description": "No Content"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "OK" },
+          "204": { "description": "No Content" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "post": {
-        "description": "",
+        "tags": ["drivers"],
+        "description": "Create a new driver",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "licenseNumber": {
-                  "example": "any"
-                },
-                "phone": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "experienceYears": {
-                  "example": "any"
-                },
-                "available": {
-                  "example": "any"
-                }
-              }
+                "firstName": { "type": "string", "example": "John" },
+                "lastName": { "type": "string", "example": "Doe" },
+                "licenseNumber": { "type": "string", "example": "ABC123456" },
+                "phone": { "type": "string", "example": "+1234567890" },
+                "email": { "type": "string", "example": "john.doe@example.com" },
+                "experienceYears": { "type": "integer", "example": 5 },
+                "available": { "type": "boolean", "example": true }
+              },
+              "required": ["firstName", "lastName", "licenseNumber", "phone", "email", "experienceYears", "available"]
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "201": { "description": "Created" },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     },
     "/drivers/{id}": {
       "get": {
-        "tags": [
-          "drivers"
-        ],
+        "tags": ["drivers"],
         "description": "Get a single driver by ID",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "id",
@@ -310,19 +407,14 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "description": "OK" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "put": {
-        "description": "",
+        "tags": ["drivers"],
+        "description": "Update a driver",
         "parameters": [
           {
             "name": "id",
@@ -333,54 +425,32 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "licenseNumber": {
-                  "example": "any"
-                },
-                "phone": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "experienceYears": {
-                  "example": "any"
-                },
-                "available": {
-                  "example": "any"
-                }
+                "firstName": { "type": "string" },
+                "lastName": { "type": "string" },
+                "licenseNumber": { "type": "string" },
+                "phone": { "type": "string" },
+                "email": { "type": "string" },
+                "experienceYears": { "type": "integer" },
+                "available": { "type": "boolean" }
               }
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "204": { "description": "No Content" },
+          "400": { "description": "Bad Request" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "delete": {
-        "description": "",
+        "tags": ["drivers"],
+        "description": "Delete a driver",
         "parameters": [
           {
             "name": "id",
@@ -390,18 +460,10 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "204": { "description": "No Content" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     }

@@ -40,8 +40,8 @@ const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
   info: {
-    title: 'Vehicles and Drivers API',
-    description: 'API for managing vehicles and drivers',
+    title: 'Transport Api',
+    description: 'API for managing vehicles, drivers, trips and records',
   },
 };
 
