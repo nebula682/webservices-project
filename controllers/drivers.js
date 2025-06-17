@@ -210,6 +210,7 @@ const deleteDriver = async (req, res) => {
 module.exports ={
                 getAll,
                 getSingle,
+                
                 createDriver,
                 updateDriver,
                 deleteDriver
