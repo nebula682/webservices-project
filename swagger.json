@@ -5,10 +5,10 @@
     "description": "API for managing vehicles and drivers",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "webservices-project-mv6b.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/trips/": {

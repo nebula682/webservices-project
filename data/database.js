@@ -23,7 +23,7 @@ MongoClient.connect(process.env.MONGODB_URL)
 
 const getDatabase = () => {
                 if (!database) {
-                                throw error('Database not initialized')
+                                throw new Error('Database not initialized')
 }
 return database;
 };
